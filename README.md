@@ -3,7 +3,7 @@
 One page: logo, upcoming gigs as posters, each linking to Ticket Tailor.
 
 ## Adding or changing a gig
-Open `index.html`, find `EDIT YOUR GIGS HERE`, and copy the block for each new event.
+Open `index.html`, find `EDIT YOUR SHOWS HERE`, and copy the block for each new event.
 Put the poster image in `posters/` and write its file name in `poster`.
 Past gigs hide themselves automatically.
 

@@ -6,81 +6,105 @@
 <link rel="icon" href="favicon.png">
 <title>Nowboy Records</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Nowboy Records. Country, roots and Americana from the UK's Deep South. Home of Southern Nights.">
+<meta name="description" content="Nowboy Records. Country, roots and Americana from the UK's Deep South. Home of Southern Nights, Brighton's country music showcase.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sancreek&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300..600;1,400&family=Yeseva+One&display=swap">
 <style>
-/* Layout: one column. Logo up top, then a wall of gig posters you click through to tickets. */
+/* Layout: cream paper, posters do the work. Lead show up top, the rest in a grid. */
 :root {
-  --olive: #534F3F;      /* from the Nowboy logo */
-  --olive-deep: #3E3B2F;
-  --olive-line: #6B6652;
-  --cream: #FCFCFC;      /* from the Nowboy logo */
-  --bone: #E6E1D2;
-  --dust: #B7B19C;
-  --display: "Sancreek", Rockwell, Georgia, serif;
-  --body: "Inter", system-ui, -apple-system, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --paper:  #F3EFE3;   /* cream, off the logo */
+  --ink:    #37341F;   /* deep olive */
+  --olive:  #534F3F;   /* logo olive */
+  --muted:  #7C765F;
+  --line:   #D8D1BB;
+  --display: "Yeseva One", Windsor, Georgia, serif;
+  --body: "Jost", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #2F2C1D; --ink: #F3EFE3; --olive: #E6E0CB; --muted: #ABA389; --line: #4C4833;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #2F2C1D; --ink: #F3EFE3; --olive: #E6E0CB; --muted: #ABA389; --line: #4C4833;
   color-scheme: dark;
 }
+
 * { box-sizing: border-box; }
 body {
-  background: var(--olive); color: var(--bone);
-  font-family: var(--body); font-size: 16px; line-height: 1.55;
+  background: var(--paper); color: var(--ink);
+  font-family: var(--body); font-size: 17px; font-weight: 300; line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; }
-a:focus-visible { outline: 2px solid var(--cream); outline-offset: 4px; }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; text-wrap: balance; margin: 0; line-height: 1.05; }
+
 .wrap {
-  max-width: 1080px; margin: 0 auto;
+  max-width: 1120px; margin: 0 auto;
   padding-left: max(20px, env(safe-area-inset-left, 0px));
   padding-right: max(20px, env(safe-area-inset-right, 0px));
 }
+.eyebrow { font-size: 12px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); margin: 0; }
 
-/* Header */
-header .wrap { padding-block: 56px 40px; display: grid; justify-items: center; text-align: center; gap: 18px; }
-.sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
-.logo { width: min(360px, 78vw); height: auto; display: block; }
-.tag { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--dust); margin: 0; }
-.intro { max-width: 34ch; margin: 0; color: var(--bone); font-size: 17px; }
-
-/* Section heading with stars, like the logo */
-.rule { display: flex; align-items: center; gap: 14px; margin: 8px 0 28px; }
-.rule::before, .rule::after { content: ""; flex: 1; height: 1px; background: var(--olive-line); }
-.rule h2 { font-family: var(--display); font-weight: 400; font-size: 30px; letter-spacing: .03em; text-transform: uppercase; color: var(--cream); margin: 0; white-space: nowrap; }
-
-/* Poster wall */
-.events { list-style: none; margin: 0; padding: 0 0 72px; display: grid; gap: 28px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
-.event a { display: grid; gap: 14px; text-decoration: none; }
-.poster {
-  aspect-ratio: 4 / 5; max-width: 100%; width: 100%;
-  background: var(--olive-deep); border: 1px solid var(--olive-line);
-  overflow: hidden; position: relative;
-  transition: transform .25s ease, box-shadow .25s ease;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+/* Masthead */
+header .wrap { padding-block: 52px 44px; display: grid; justify-items: center; text-align: center; gap: 20px; }
+.logo {
+  width: min(300px, 70vw); aspect-ratio: 800 / 779;
+  background: var(--ink);
+  -webkit-mask: url(logo-full.png) center / contain no-repeat;
+          mask: url(logo-full.png) center / contain no-repeat;
 }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.standfirst { max-width: 40ch; margin: 0; font-size: 19px; color: var(--ink); }
+
+/* Section heads */
+.head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+        border-top: 1px solid var(--line); padding-top: 14px; margin-bottom: 30px; }
+.head h2 { font-size: 26px; letter-spacing: .01em; }
+
+/* Lead show */
+.lead { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 44px; align-items: start; padding-bottom: 72px; }
+@media (max-width: 760px) { .lead { grid-template-columns: 1fr; gap: 28px; } }
+.lead-copy { display: grid; gap: 18px; align-content: start; }
+.lead h3 { font-size: clamp(42px, 7.5vw, 68px); }
+.when { font-size: 18px; font-weight: 400; letter-spacing: .02em; margin: 0; }
+.bill { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding-block: 18px; }
+.bill li { font-family: var(--display); font-size: 19px; text-transform: uppercase; line-height: 1.2; }
+.note { margin: 0; color: var(--muted); font-size: 16px; }
+
+/* Poster */
+.poster { display: block; width: 100%; max-width: 100%; aspect-ratio: 3 / 4; overflow: hidden; background: var(--olive); border: 1px solid var(--line); }
 .poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.event a:hover .poster, .event a:focus-visible .poster { transform: translateY(-4px) rotate(-.4deg); box-shadow: 0 18px 40px rgba(0,0,0,.35); }
+a.poster { transition: opacity .2s ease; }
+a.poster:hover { opacity: .9; }
+.placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 24px; color: var(--paper); }
+.placeholder .pname { font-family: var(--display); text-transform: uppercase; font-size: clamp(28px, 6vw, 40px); line-height: 1.05; }
+.placeholder .pwhen { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; }
 
-/* Drawn poster, used until the real poster file is added */
-.drawn { position: absolute; inset: 14px; border: 2px solid var(--cream); padding: 22px 18px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; color: var(--cream); }
-.drawn .presents { font-family: var(--mono); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--dust); }
-.drawn .name { font-family: var(--display); font-size: clamp(40px, 11vw, 54px); line-height: 1; text-transform: uppercase; margin: 4px 0 2px; text-wrap: balance; }
-.drawn .acts { font-family: var(--display); font-size: 17px; line-height: 1.45; text-transform: uppercase; margin-top: auto; }
-.drawn .when { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; margin-top: auto; border-top: 1px solid var(--olive-line); padding-top: 12px; width: 100%; }
+/* Buttons */
+.btn { justify-self: start; display: inline-block; font-size: 13px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+       background: var(--ink); color: var(--paper); padding: 14px 26px; text-decoration: none; }
+.btn:hover { background: var(--olive); }
+.btn--ghost { background: none; color: var(--ink); border: 1px solid var(--line); }
+.btn--ghost:hover { background: var(--ink); color: var(--paper); }
 
-.meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.meta h3 { font-family: var(--display); font-weight: 400; font-size: 24px; color: var(--cream); margin: 0; text-wrap: balance; }
-.meta p { margin: 0; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dust); }
-.btn { justify-self: start; font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; background: var(--cream); color: var(--olive-deep); padding: 11px 18px; }
-.event a:hover .btn { background: var(--bone); }
+/* Grid of other shows */
+.shows { list-style: none; margin: 0; padding: 0 0 72px; display: grid; gap: 36px;
+         grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+.show a { display: grid; gap: 14px; text-decoration: none; }
+.show h3 { font-size: 24px; }
+.show .when { font-size: 15px; color: var(--muted); }
 
-footer { border-top: 1px solid var(--olive-line); }
-footer .wrap { padding-block: 28px 40px; display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dust); }
+footer { border-top: 1px solid var(--line); }
+footer .wrap { padding-block: 26px 44px; display: flex; flex-wrap: wrap; gap: 10px 32px; justify-content: space-between;
+               font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
 footer a { text-decoration: none; }
-footer a:hover { color: var(--cream); }
-@media (prefers-reduced-motion: reduce) { .poster { transition: none; } }
+footer a:hover { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 
 </head>
@@ -88,14 +112,15 @@ footer a:hover { color: var(--cream); }
 <header>
   <div class="wrap">
     <h1 class="sr">Nowboy Records</h1>
-    <img class="logo" src="logo-full.png" alt="Nowboy Records, Brighton: a skull in a cowboy hat under an arch of lettering">
-    <p class="intro">Country, roots and Americana from the UK's Deep South. Home of Southern Nights.</p>
+    <div class="logo" role="img" aria-label="Nowboy Records, Brighton"></div>
+    <p class="standfirst">Country, roots and Americana from the UK's Deep South. Home of Southern Nights, Brighton's country music showcase.</p>
   </div>
 </header>
 
 <main class="wrap">
-  <div class="rule"><h2>Coming up</h2></div>
-  <ul class="events" id="events"></ul>
+  <div class="head"><h2>Shows</h2><p class="eyebrow" id="count"></p></div>
+  <div id="lead"></div>
+  <ul class="shows" id="shows"></ul>
 </main>
 
 <footer>
@@ -106,47 +131,70 @@ footer a:hover { color: var(--cream); }
 </footer>
 
 <script>
-/* ===== EDIT YOUR GIGS HERE =====
-   Add a new block for each event. Put the poster image in the
-   "posters" folder and write its file name in poster (or leave it
-   as "" to show the drawn poster). Past gigs hide themselves. */
-const EVENTS = [
+/* ===== EDIT YOUR SHOWS HERE =====
+   One block per show. Put the poster image in the "posters" folder
+   and write its file name in poster (leave "" for a plain card).
+   Past shows disappear on their own. */
+const SHOWS = [
   {
     name: "Southern Nights",
     date: "2026-11-26",
-    time: "7PM",
+    time: "7:00pm",
     venue: "Alphabet, Brighton",
-    acts: ["Grand Hazards", "Dom Glynn & His Sunday Best", "Hackney Hill Pickers", "Savannah Gardner"],
-    poster: "",  // e.g. "posters/southern-nights-alphabet.jpg"
+    bill: ["Grand Hazards", "Dom Glynn & His Sunday Best", "Hackney Hill Pickers", "Savannah Gardner"],
+    note: "£12 advance until 19 November, then £15. £15 on the door, or £12 in a hat and/or boots.",
+    poster: "posters/southern-nights-alphabet.jpg",
     tickets: "https://buytickets.at/nowboyrecords/2424887"
   }
 ];
 /* ===== END OF EDITING ===== */
 
-const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const today = new Date(); today.setHours(0,0,0,0);
-const list = document.getElementById("events");
-const upcoming = EVENTS
-  .filter(e => new Date(e.date + "T23:59:59") >= today)
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const today = new Date(); today.setHours(0, 0, 0, 0);
+const fmt = d => d.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+
+const upcoming = SHOWS
+  .filter(s => new Date(s.date + "T23:59:59") >= today)
   .sort((a, b) => a.date.localeCompare(b.date));
 
-list.innerHTML = upcoming.length ? upcoming.map(e => {
-  const d = new Date(e.date + "T12:00:00");
-  const day = d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
-  const art = e.poster
-    ? `<img src="${esc(e.poster)}" alt="${esc(e.name)} poster" loading="lazy">`
-    : `<div class="drawn" aria-hidden="true">
-         <span class="presents">Nowboy Records presents</span>
-         <span class="name">${esc(e.name)}</span>
-         <span class="acts">${e.acts.map(esc).join("<br>")}</span>
-         <span class="when">${esc(day)} · ${esc(e.time)} · ${esc(e.venue)}</span>
-       </div>`;
-  return `<li class="event"><a href="${esc(e.tickets)}" target="_blank" rel="noopener">
-    <div class="poster">${art}</div>
-    <div class="meta"><h3>${esc(e.name)}</h3><p>${esc(day)} · ${esc(e.venue)}</p></div>
-    <span class="btn">Get tickets →</span>
-  </a></li>`;
-}).join("") : `<li><p class="intro">New dates soon.</p></li>`;
+const posterFor = s => s.poster
+  ? `<img src="${esc(s.poster)}" alt="${esc(s.name)} poster" loading="lazy">`
+  : `<div class="placeholder"><span class="pname">${esc(s.name)}</span><span class="pwhen">${esc(fmt(new Date(s.date + "T12:00:00")))}</span></div>`;
+
+const leadEl = document.getElementById("lead");
+const listEl = document.getElementById("shows");
+const countEl = document.getElementById("count");
+
+if (!upcoming.length) {
+  countEl.textContent = "";
+  leadEl.innerHTML = `<p class="standfirst">New dates announced soon.</p>`;
+} else {
+  const [first, ...rest] = upcoming;
+  const d = fmt(new Date(first.date + "T12:00:00"));
+  countEl.textContent = upcoming.length === 1 ? "One date" : upcoming.length + " dates";
+
+  leadEl.innerHTML = `<div class="lead">
+    <a class="poster" href="${esc(first.tickets)}" target="_blank" rel="noopener">${posterFor(first)}</a>
+    <div class="lead-copy">
+      <p class="eyebrow">Next show</p>
+      <h3>${esc(first.name)}</h3>
+      <p class="when">${esc(d)} · ${esc(first.time)}<br>${esc(first.venue)}</p>
+      <ul class="bill">${first.bill.map(b => `<li>${esc(b)}</li>`).join("")}</ul>
+      ${first.note ? `<p class="note">${esc(first.note)}</p>` : ""}
+      <a class="btn" href="${esc(first.tickets)}" target="_blank" rel="noopener">Get tickets</a>
+    </div>
+  </div>`;
+
+  listEl.innerHTML = rest.map(s => {
+    const dd = fmt(new Date(s.date + "T12:00:00"));
+    return `<li class="show"><a href="${esc(s.tickets)}" target="_blank" rel="noopener">
+      <span class="poster">${posterFor(s)}</span>
+      <h3>${esc(s.name)}</h3>
+      <p class="when">${esc(dd)} · ${esc(s.venue)}</p>
+      <span class="btn btn--ghost">Get tickets</span>
+    </a></li>`;
+  }).join("");
+}
 </script>
 
 </body>
