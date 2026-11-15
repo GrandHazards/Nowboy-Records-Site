@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="favicon.png">
+<title>Merch &middot; Nowboy Records</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Nowboy Records merch. Coming soon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300..600&family=Yeseva+One&display=swap">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="topbar" id="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">Nowboy Records</a>
+    <nav class="nav"><a href="index.html">Shows</a><a href="artists.html">Artists</a><a href="merch.html" aria-current="page">Merch</a><a href="about.html">About</a></nav>
+  </div>
+</div>
+<main class="soon">
+  <div class="wrap">
+    <p class="eyebrow">Merch</p>
+    <h1>Coming soon</h1>
+    <p>Shirts, caps and records are on the way. Follow along on Instagram to hear first.</p>
+    <a class="btn" href="index.html">See what's on</a>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>&copy; Nowboy Records &middot; Brighton</span>
+    <a href="https://www.instagram.com/nowboyrecords/" target="_blank" rel="noopener">Instagram @nowboyrecords</a>
+  </div>
+</footer>
+<script>
+/* Top bar slides away as you scroll down and comes back as you scroll up. */
+(function () {
+  var bar = document.getElementById("topbar"), last = window.scrollY, ticking = false;
+  function update() {
+    var y = window.scrollY;
+    if (y > last + 6 && y > 140) bar.classList.add("is-away");
+    else if (y < last - 6) bar.classList.remove("is-away");
+    last = y; ticking = false;
+  }
+  addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
