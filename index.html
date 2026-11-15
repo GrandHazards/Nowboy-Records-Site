@@ -9,7 +9,7 @@
 <meta name="description" content="Nowboy Records. Country, roots and Americana from the UK's Deep South. Home of Southern Nights.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sancreek&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap">
 <style>
 /* Layout: one column. Logo up top, then a wall of gig posters you click through to tickets. */
 :root {
@@ -19,7 +19,7 @@
   --cream: #FCFCFC;      /* from the Nowboy logo */
   --bone: #E6E1D2;
   --dust: #B7B19C;
-  --display: "Alfa Slab One", Rockwell, "Courier New", serif;
+  --display: "Sancreek", Rockwell, Georgia, serif;
   --body: "Inter", system-ui, -apple-system, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   color-scheme: dark;
@@ -40,15 +40,15 @@ a:focus-visible { outline: 2px solid var(--cream); outline-offset: 4px; }
 
 /* Header */
 header .wrap { padding-block: 56px 40px; display: grid; justify-items: center; text-align: center; gap: 18px; }
-.logo { width: min(260px, 62vw); height: auto; display: block; }
+.sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.logo { width: min(360px, 78vw); height: auto; display: block; }
 .tag { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--dust); margin: 0; }
 .intro { max-width: 34ch; margin: 0; color: var(--bone); font-size: 17px; }
 
 /* Section heading with stars, like the logo */
 .rule { display: flex; align-items: center; gap: 14px; margin: 8px 0 28px; }
 .rule::before, .rule::after { content: ""; flex: 1; height: 1px; background: var(--olive-line); }
-.rule h2 { font-family: var(--display); font-weight: 400; font-size: 22px; letter-spacing: .06em; text-transform: uppercase; color: var(--cream); margin: 0; white-space: nowrap; }
-.rule h2 span { font-size: .7em; vertical-align: .15em; margin: 0 .5em; }
+.rule h2 { font-family: var(--display); font-weight: 400; font-size: 30px; letter-spacing: .03em; text-transform: uppercase; color: var(--cream); margin: 0; white-space: nowrap; }
 
 /* Poster wall */
 .events { list-style: none; margin: 0; padding: 0 0 72px; display: grid; gap: 28px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
@@ -66,13 +66,12 @@ header .wrap { padding-block: 56px 40px; display: grid; justify-items: center; t
 /* Drawn poster, used until the real poster file is added */
 .drawn { position: absolute; inset: 14px; border: 2px solid var(--cream); padding: 22px 18px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; color: var(--cream); }
 .drawn .presents { font-family: var(--mono); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--dust); }
-.drawn .name { font-family: var(--display); font-size: clamp(34px, 9vw, 44px); line-height: .95; text-transform: uppercase; margin: 4px 0 2px; text-wrap: balance; }
-.drawn .stars { letter-spacing: .6em; font-size: 12px; color: var(--dust); }
-.drawn .acts { font-family: var(--display); font-size: 15px; line-height: 1.45; text-transform: uppercase; margin-top: auto; }
+.drawn .name { font-family: var(--display); font-size: clamp(40px, 11vw, 54px); line-height: 1; text-transform: uppercase; margin: 4px 0 2px; text-wrap: balance; }
+.drawn .acts { font-family: var(--display); font-size: 17px; line-height: 1.45; text-transform: uppercase; margin-top: auto; }
 .drawn .when { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; margin-top: auto; border-top: 1px solid var(--olive-line); padding-top: 12px; width: 100%; }
 
 .meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.meta h3 { font-family: var(--display); font-weight: 400; font-size: 19px; color: var(--cream); margin: 0; text-wrap: balance; }
+.meta h3 { font-family: var(--display); font-weight: 400; font-size: 24px; color: var(--cream); margin: 0; text-wrap: balance; }
 .meta p { margin: 0; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dust); }
 .btn { justify-self: start; font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; background: var(--cream); color: var(--olive-deep); padding: 11px 18px; }
 .event a:hover .btn { background: var(--bone); }
@@ -88,14 +87,14 @@ footer a:hover { color: var(--cream); }
 <body>
 <header>
   <div class="wrap">
-    <img class="logo" src="logo.png" alt="Nowboy Records logo: a skull in a cowboy hat with the letters N, W, B and Y">
-    <p class="tag">★ Nowboy Records ★</p>
+    <h1 class="sr">Nowboy Records</h1>
+    <img class="logo" src="logo-full.png" alt="Nowboy Records, Brighton: a skull in a cowboy hat under an arch of lettering">
     <p class="intro">Country, roots and Americana from the UK's Deep South. Home of Southern Nights.</p>
   </div>
 </header>
 
 <main class="wrap">
-  <div class="rule"><h2><span>★</span>Coming up<span>★</span></h2></div>
+  <div class="rule"><h2>Coming up</h2></div>
   <ul class="events" id="events"></ul>
 </main>
 
@@ -139,7 +138,6 @@ list.innerHTML = upcoming.length ? upcoming.map(e => {
     : `<div class="drawn" aria-hidden="true">
          <span class="presents">Nowboy Records presents</span>
          <span class="name">${esc(e.name)}</span>
-         <span class="stars">★ ★ ★</span>
          <span class="acts">${e.acts.map(esc).join("<br>")}</span>
          <span class="when">${esc(day)} · ${esc(e.time)} · ${esc(e.venue)}</span>
        </div>`;
