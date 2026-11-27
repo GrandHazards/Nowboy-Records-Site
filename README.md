@@ -8,6 +8,12 @@ Open `index.html`, find `EDIT YOUR SHOWS HERE`, and copy the block for each new 
 Put the poster image in `posters/` and write its file name in `poster`.
 Past shows disappear on their own.
 
+## Members page
+`members.html` is the free Nowboy Records Members signup. The form sends to the
+Grand Hazards Shopify store (one list for both brands), tagged `newsletter` and
+`nowboy-member`, so members can be filtered in Shopify Messaging.
+Change the wording in `build.py` (`MEMBERS_MAIN`) and run `python3 build.py`.
+
 ## Changing the look
 All the styling is in `site.css`, shared by every page.
 

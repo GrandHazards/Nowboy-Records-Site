@@ -89,6 +89,27 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; color: var(--ink); t
        background: var(--rust); color: #FDF4EC; padding: 14px 26px; text-decoration: none; margin-top: 6px; }
 .btn:hover { background: var(--ink); }
 
+/* Members page */
+.members .wrap { padding-block: 64px 100px; display: grid; gap: 48px 64px; align-items: start;
+                 grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.members h1 { font-size: clamp(38px, 7vw, 58px); margin-bottom: 18px; }
+.members-intro .standfirst { margin-bottom: 28px; }
+.perks { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.perks li { border-top: 1px solid var(--line); padding-top: 14px; }
+.perks strong { font-weight: 500; color: var(--olive); }
+.join-card { background: var(--raised); border: 1px solid var(--line); padding: clamp(24px, 5vw, 40px); }
+.join-card h2 { font-size: 28px; margin: 8px 0 22px; }
+.join-form { display: grid; gap: 8px; }
+.join-form label { font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+.join-form .opt { text-transform: none; letter-spacing: 0; font-weight: 300; }
+.join-form input { font: inherit; font-size: 17px; color: var(--ink); background: var(--paper);
+                   border: 1px solid var(--olive); border-radius: 0; padding: 12px 14px; width: 100%; }
+.join-form input:focus-visible { outline: 2px solid var(--rust); outline-offset: 1px; }
+.join-form .btn { border: 0; cursor: pointer; margin-top: 14px; font-family: var(--body); }
+.join-form .small, .join-done p { font-size: 14px; color: var(--muted); margin: 10px 0 0; }
+.join-done .btn { margin-top: 20px; }
+.join-done:focus { outline: none; }
+
 footer { border-top: 1px solid var(--line); }
 footer .wrap { padding-block: 26px 44px; display: flex; flex-wrap: wrap; gap: 10px 32px; justify-content: space-between;
                font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }

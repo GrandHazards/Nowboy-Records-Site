@@ -4,7 +4,8 @@ import pathlib
 
 HERE = pathlib.Path(__file__).parent
 NAV = [("index.html", "Shows"), ("artists.html", "Artists"),
-       ("merch.html", "Merch"), ("about.html", "About")]
+       ("merch.html", "Merch"), ("about.html", "About"),
+       ("members.html", "Members")]
 
 HEAD = """<title>{title}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -125,6 +126,72 @@ SOON = """<main class="soon">
 </main>
 """
 
+# Signups go into the Grand Hazards Shopify customer list (one list for both
+# brands), tagged "nowboy-member" so they can be picked out in Shopify Messaging.
+# The form posts into a hidden frame, so visitors stay on this page.
+SIGNUP_URL = "https://grandhazards.com/contact#contact_form"
+
+MEMBERS_MAIN = """<main class="members">
+  <div class="wrap">
+    <div class="members-intro">
+      <h1>Nowboy Records Members</h1>
+      <p class="standfirst">Free to join. Members hear first about new Southern Nights dates and line-ups,
+        new releases on the label and the first Nowboy Sessions videos.</p>
+      <ul class="perks">
+        <li><strong>Shows first.</strong> New dates and line-ups before we announce them anywhere else.</li>
+        <li><strong>New music first.</strong> Releases on the label, the day they land.</li>
+        <li><strong>Sessions first.</strong> Live acoustic videos, filmed in beautiful places.</li>
+      </ul>
+    </div>
+
+    <div class="join-card" id="join">
+      <div class="join-step">
+        <p class="eyebrow">Free membership</p>
+        <h2>Join the members list</h2>
+        <form class="join-form" id="join-form" method="post" action="{signup}" target="join-frame" accept-charset="UTF-8">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="utf8" value="&#10003;">
+          <input type="hidden" name="contact[tags]" value="newsletter,nowboy-member">
+          <label for="join-name">First name <span class="opt">(optional)</span></label>
+          <input id="join-name" type="text" name="contact[first_name]" autocomplete="given-name">
+          <label for="join-email">Email</label>
+          <input id="join-email" type="email" name="contact[email]" autocomplete="email" required>
+          <button type="submit" class="btn">Become a member</button>
+          <p class="small">We'll email you about Nowboy Records and Grand Hazards shows and releases.
+            No spam, and you can unsubscribe any time.</p>
+        </form>
+      </div>
+      <div class="join-done" hidden tabindex="-1">
+        <p class="eyebrow">Welcome in</p>
+        <h2>You're a member</h2>
+        <p>Thanks for joining. We'll be in touch when there's something worth hearing about.</p>
+        <a class="btn" href="index.html">See what's on</a>
+      </div>
+      <iframe name="join-frame" id="join-frame" title="Signup" hidden></iframe>
+    </div>
+  </div>
+</main>
+
+<script>
+/* Show the thank-you once the hidden frame has loaded the signup response. */
+(function () {
+  var form = document.getElementById("join-form"), frame = document.getElementById("join-frame"),
+      card = document.getElementById("join"), sent = false;
+  form.addEventListener("submit", function () {
+    sent = true;
+    form.querySelector("button").textContent = "Joining...";
+  });
+  frame.addEventListener("load", function () {
+    if (!sent) return;
+    card.querySelector(".join-step").hidden = true;
+    var done = card.querySelector(".join-done");
+    done.hidden = false;
+    done.focus();
+  });
+})();
+</script>
+""".replace("{signup}", SIGNUP_URL)
+
 PAGES = [
     ("index.html", "Nowboy Records",
      "Country, roots and Americana from the UK's Deep South. Home of Southern Nights, Brighton's country music showcase.",
@@ -141,6 +208,9 @@ PAGES = [
      "About Nowboy Records, a Brighton label for country, roots and Americana.",
      SOON.format(eyebrow="About", heading="Coming soon",
                  blurb="Nowboy Records is a Brighton label for country, roots and Americana. The full story is on its way.")),
+    ("members.html", "Members &middot; Nowboy Records",
+     "Join Nowboy Records Members for free. Hear first about Southern Nights shows, new releases and Nowboy Sessions.",
+     MEMBERS_MAIN),
 ]
 
 SKELETON = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
