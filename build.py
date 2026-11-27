@@ -126,10 +126,13 @@ SOON = """<main class="soon">
 </main>
 """
 
-# Signups go into the Grand Hazards Shopify customer list (one list for both
-# brands), tagged "nowboy-member" so they can be picked out in Shopify Messaging.
-# The form posts into a hidden frame, so visitors stay on this page.
-SIGNUP_URL = "https://grandhazards.com/contact#contact_form"
+# Signups go straight into the Nowboy Records audience in Mailchimp
+# (account nowboyrecords, us1). Nothing goes to Shopify or Grand Hazards.
+# The page asks Mailchimp for an answer in the background (JSONP), so
+# visitors stay on the page and see Mailchimp's own error messages.
+MC_BASE = "https://nowboyrecords.us1.list-manage.com/subscribe"
+MC_U = "42f1c02f9e0e5dbaa20bc704c"
+MC_ID = "fa8359bae5"
 
 MEMBERS_MAIN = """<main class="members">
   <div class="wrap">
@@ -148,49 +151,78 @@ MEMBERS_MAIN = """<main class="members">
       <div class="join-step">
         <p class="eyebrow">Free membership</p>
         <h2>Join the members list</h2>
-        <form class="join-form" id="join-form" method="post" action="{signup}" target="join-frame" accept-charset="UTF-8">
-          <input type="hidden" name="form_type" value="customer">
-          <input type="hidden" name="utf8" value="&#10003;">
-          <input type="hidden" name="contact[tags]" value="newsletter,nowboy-member">
+        <form class="join-form" id="join-form" method="post" action="@BASE@/post?u=@U@&amp;id=@ID@" target="_blank" novalidate>
           <label for="join-name">First name <span class="opt">(optional)</span></label>
-          <input id="join-name" type="text" name="contact[first_name]" autocomplete="given-name">
+          <input id="join-name" type="text" name="FNAME" autocomplete="given-name">
           <label for="join-email">Email</label>
-          <input id="join-email" type="email" name="contact[email]" autocomplete="email" required>
+          <input id="join-email" type="email" name="EMAIL" autocomplete="email" required>
+          <div aria-hidden="true" style="position:absolute;left:-5000px"><input type="text" name="b_@U@_@ID@" tabindex="-1" value=""></div>
+          <p class="join-err" id="join-err" role="alert" hidden></p>
           <button type="submit" class="btn">Become a member</button>
-          <p class="small">We'll email you about Nowboy Records and Grand Hazards shows and releases.
+          <p class="small">We'll email you about Nowboy Records shows, releases and sessions.
             No spam, and you can unsubscribe any time.</p>
         </form>
       </div>
       <div class="join-done" hidden tabindex="-1">
         <p class="eyebrow">Welcome in</p>
-        <h2>You're a member</h2>
-        <p>Thanks for joining. We'll be in touch when there's something worth hearing about.</p>
+        <h2 id="join-head">You're a member</h2>
+        <p id="join-msg">Thanks for joining. We'll be in touch when there's something worth hearing about.</p>
         <a class="btn" href="index.html">See what's on</a>
       </div>
-      <iframe name="join-frame" id="join-frame" title="Signup" hidden></iframe>
     </div>
   </div>
 </main>
 
 <script>
-/* Show the thank-you once the hidden frame has loaded the signup response. */
+/* Sends the signup to Mailchimp in the background and shows the answer here.
+   If scripts are off, the form posts to Mailchimp's own page in a new tab. */
 (function () {
-  var form = document.getElementById("join-form"), frame = document.getElementById("join-frame"),
-      card = document.getElementById("join"), sent = false;
-  form.addEventListener("submit", function () {
-    sent = true;
-    form.querySelector("button").textContent = "Joining...";
-  });
-  frame.addEventListener("load", function () {
-    if (!sent) return;
-    card.querySelector(".join-step").hidden = true;
-    var done = card.querySelector(".join-done");
-    done.hidden = false;
-    done.focus();
+  var form = document.getElementById("join-form"), card = document.getElementById("join"),
+      err = document.getElementById("join-err"), btn = form.querySelector("button");
+  function fail(msg) {
+    err.textContent = msg; err.hidden = false;
+    btn.disabled = false; btn.textContent = "Become a member";
+  }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = form.EMAIL.value.trim();
+    if (!/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(email)) { fail("Please enter a valid email address."); return; }
+    err.hidden = true; btn.disabled = true; btn.textContent = "Joining...";
+    var cb = "nbJoin" + Date.now(), s = document.createElement("script"), done = false;
+    var timer = setTimeout(function () {
+      if (done) return; done = true; delete window[cb]; s.remove();
+      fail("That didn't go through. Please try again in a moment.");
+    }, 12000);
+    window[cb] = function (r) {
+      if (done) return; done = true; clearTimeout(timer); delete window[cb]; s.remove();
+      var msg = String(r && r.msg || "").replace(/^\\d+\\s*-\\s*/, "").replace(/<[^>]*>/g, "");
+      if (r && r.result === "success") {
+        if (/confirm/i.test(msg)) {
+          document.getElementById("join-head").textContent = "Check your inbox";
+          document.getElementById("join-msg").textContent =
+            "Nearly there. We've sent you an email: click the link in it to confirm your membership.";
+        }
+        card.querySelector(".join-step").hidden = true;
+        var d = card.querySelector(".join-done"); d.hidden = false; d.focus();
+      } else if (/already subscribed/i.test(msg)) {
+        card.querySelector(".join-step").hidden = true;
+        document.getElementById("join-msg").textContent = "You're already on the list. Good to have you.";
+        var d2 = card.querySelector(".join-done"); d2.hidden = false; d2.focus();
+      } else {
+        fail(msg || "Something went wrong. Please try again.");
+      }
+    };
+    var q = "u=@U@&id=@ID@&c=" + cb +
+            "&EMAIL=" + encodeURIComponent(email) +
+            "&FNAME=" + encodeURIComponent(form.FNAME.value.trim()) +
+            "&b_@U@_@ID@=" + encodeURIComponent(form["b_@U@_@ID@"].value);
+    s.src = "@BASE@/post-json?" + q;
+    s.onerror = function () { if (done) return; done = true; clearTimeout(timer); delete window[cb]; fail("That didn't go through. Please try again in a moment."); };
+    document.body.appendChild(s);
   });
 })();
 </script>
-""".replace("{signup}", SIGNUP_URL)
+""".replace("@BASE@", MC_BASE).replace("@U@", MC_U).replace("@ID@", MC_ID)
 
 PAGES = [
     ("index.html", "Nowboy Records",
