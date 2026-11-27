@@ -151,7 +151,7 @@ MEMBERS_MAIN = """<main class="members">
       <div class="join-step">
         <p class="eyebrow">Free membership</p>
         <h2>Join the members list</h2>
-        <form class="join-form" id="join-form" method="post" action="@BASE@/post?u=@U@&amp;id=@ID@" target="_blank" novalidate>
+        <form class="join-form" id="join-form" method="post" action="@BASE@/post?u=@U@&amp;id=@ID@" target="_self" novalidate>
           <label for="join-name">First name <span class="opt">(optional)</span></label>
           <input id="join-name" type="text" name="FNAME" autocomplete="given-name">
           <label for="join-email">Email</label>
@@ -179,6 +179,11 @@ MEMBERS_MAIN = """<main class="members">
 (function () {
   var form = document.getElementById("join-form"), card = document.getElementById("join"),
       err = document.getElementById("join-err"), btn = form.querySelector("button");
+  function fallback() {
+    /* Background route didn't answer: send the form to Mailchimp's own page instead. */
+    form.target = "_self";
+    HTMLFormElement.prototype.submit.call(form);
+  }
   function fail(msg) {
     err.textContent = msg; err.hidden = false;
     btn.disabled = false; btn.textContent = "Become a member";
@@ -190,9 +195,9 @@ MEMBERS_MAIN = """<main class="members">
     err.hidden = true; btn.disabled = true; btn.textContent = "Joining...";
     var cb = "nbJoin" + Date.now(), s = document.createElement("script"), done = false;
     var timer = setTimeout(function () {
-      if (done) return; done = true; delete window[cb]; s.remove();
-      fail("That didn't go through. Please try again in a moment.");
-    }, 12000);
+      if (done) return; done = true; window[cb] = function () {}; s.remove();
+      fallback();
+    }, 6000);
     window[cb] = function (r) {
       if (done) return; done = true; clearTimeout(timer); delete window[cb]; s.remove();
       var msg = String(r && r.msg || "").replace(/^\\d+\\s*-\\s*/, "").replace(/<[^>]*>/g, "");
@@ -208,8 +213,10 @@ MEMBERS_MAIN = """<main class="members">
         card.querySelector(".join-step").hidden = true;
         document.getElementById("join-msg").textContent = "You're already on the list. Good to have you.";
         var d2 = card.querySelector(".join-done"); d2.hidden = false; d2.focus();
+      } else if (/valid|email/i.test(msg)) {
+        fail(msg);
       } else {
-        fail(msg || "Something went wrong. Please try again.");
+        fallback();
       }
     };
     var q = "u=@U@&id=@ID@&c=" + cb +
@@ -217,7 +224,7 @@ MEMBERS_MAIN = """<main class="members">
             "&FNAME=" + encodeURIComponent(form.FNAME.value.trim()) +
             "&b_@U@_@ID@=" + encodeURIComponent(form["b_@U@_@ID@"].value);
     s.src = "@BASE@/post-json?" + q;
-    s.onerror = function () { if (done) return; done = true; clearTimeout(timer); delete window[cb]; fail("That didn't go through. Please try again in a moment."); };
+    s.onerror = function () { if (done) return; done = true; clearTimeout(timer); window[cb] = function () {}; fallback(); };
     document.body.appendChild(s);
   });
 })();
