@@ -118,3 +118,7 @@ footer a { text-decoration: none; }
 footer a:hover { color: var(--rust); }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* One-line notice under the masthead (e.g. post-show feedback) */
+.notice { margin: 0; font-size: 15px; color: var(--muted); }
+.notice a { color: var(--rust); font-weight: 500; text-underline-offset: 4px; }
