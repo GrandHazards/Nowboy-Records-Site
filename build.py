@@ -18,7 +18,7 @@ HEAD = """<title>{title}</title>
 
 TOPBAR = """<div class="topbar" id="topbar">
   <div class="wrap">
-    <a class="brand" href="index.html">Nowboy Records</a>
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>Nowboy Records</a>
     <nav class="nav">{links}</nav>
   </div>
 </div>
@@ -139,11 +139,13 @@ MEMBERS_MAIN = """<main class="members">
   <div class="wrap">
     <div class="members-intro">
       <h1>Nowboy Records Members</h1>
-      <p class="standfirst">Free to join. Members hear first about new Southern Nights dates and line-ups,
-        and new releases on the label.</p>
+      <p class="standfirst">Free to join. Members hear about shows first, get money off tickets,
+        and find out about the best new country, bluegrass and Americana artists before anyone else.</p>
       <ul class="perks">
         <li><strong>Shows first.</strong> New dates and line-ups before we announce them anywhere else.</li>
-        <li><strong>New music first.</strong> Releases on the label, the day they land.</li>
+        <li><strong>New music first.</strong> Find out about upcoming country, bluegrass and Americana artists here first.</li>
+        <li><strong>Member discounts.</strong> Money off tickets, plus discounted early-access tickets in a members' presale.</li>
+        <li><strong>More on the way.</strong> News, merch and much more coming soon.</li>
       </ul>
     </div>
 
@@ -159,7 +161,7 @@ MEMBERS_MAIN = """<main class="members">
           <div aria-hidden="true" style="position:absolute;left:-5000px"><input type="text" name="b_@U@_@ID@" tabindex="-1" value=""></div>
           <p class="join-err" id="join-err" role="alert" hidden></p>
           <button type="submit" class="btn">Become a member</button>
-          <p class="small">We'll email you about Nowboy Records shows and releases.
+          <p class="small">We'll email you about Nowboy Records shows, artists and member offers.
             No spam, and you can unsubscribe any time.</p>
         </form>
       </div>
@@ -248,7 +250,7 @@ PAGES = [
      SOON.format(eyebrow="About", heading="Coming soon",
                  blurb="Nowboy Records is a Brighton label for country, roots and Americana. The full story is on its way.")),
     ("members.html", "Members &middot; Nowboy Records",
-     "Join Nowboy Records Members for free. Hear first about Southern Nights shows and new releases.",
+     "Join Nowboy Records Members for free. Hear about Southern Nights shows first, get member discounts on tickets and discover new country, bluegrass and Americana artists.",
      MEMBERS_MAIN),
 ]
 

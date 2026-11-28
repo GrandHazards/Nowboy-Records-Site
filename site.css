@@ -1,14 +1,13 @@
-/* Nowboy Records — pale turquoise ground, olive ink, rodeo rust.
-   Turquoise, olive and rust is old country-western (bolo ties and Nudie suits),
-   and it stays well clear of the Grand Hazards black-and-gold. */
+/* Nowboy Records — clean white ground with deep country green for the brand
+   and the reading text, and rodeo rust kept for buttons and calls to action. */
 :root {
-  --paper:  #CFE3DC;   /* pale dusty turquoise */
-  --raised: #BCD5CD;   /* a shade down, behind a poster */
-  --ink:    #26291F;   /* olive-black, all the reading text */
-  --olive:  #534F3F;   /* the logo olive */
+  --paper:  #FFFFFF;   /* white */
+  --raised: #F3F6F3;   /* a touch off-white, behind cards and posters */
+  --ink:    #1E3A2B;   /* deep country green: headings and reading text */
+  --olive:  #1E3A2B;   /* the logo colour (same green) */
   --rust:   #A8401F;   /* the pop: buttons and calls to action */
-  --muted:  #5A6158;
-  --line:   #A8C2B9;
+  --muted:  #56645B;
+  --line:   #DCE4DE;
   --display: "Yeseva One", Windsor, Georgia, serif;
   --body: "Jost", system-ui, -apple-system, "Helvetica Neue", sans-serif;
   color-scheme: light;
@@ -42,7 +41,10 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; color: var(--ink); t
 }
 .topbar.is-away { transform: translateY(-115%); }
 .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; padding-block: 14px; }
-.brand { font-family: var(--display); font-size: 19px; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 19px; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.brand-mark { width: 40px; height: 39px; flex: none; background: var(--olive);
+  -webkit-mask: url(logo-mark.png) center / contain no-repeat;
+          mask: url(logo-mark.png) center / contain no-repeat; }
 .nav { display: flex; gap: 20px; flex-wrap: wrap; }
 .nav a { font-size: 12px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--muted); padding-block: 2px; }
 .nav a:hover { color: var(--rust); }
